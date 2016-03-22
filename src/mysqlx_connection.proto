@@ -1,0 +1,45 @@
+
+import "mysqlx_datatypes.proto";
+
+package Mysqlx.Connection;
+option java_package = "database.hbx.proto.connection";
+
+// a Capability
+//
+// a tuple of a ``name`` and a :protobuf:msg:`Mysqlx.Datatypes::Any`
+message Capability {
+  required string name = 1;
+  required Mysqlx.Datatypes.Any value = 2;
+}
+
+// Capabilities
+message Capabilities {
+  repeated Capability capabilities = 1;
+}
+
+// get supported connection capabilities and their current state
+//
+//   :returns: :protobuf:msg:`Mysqlx.Connection::Capabilities` or :protobuf:msg:`Mysqlx::Error`
+//
+message CapabilitiesGet {
+};
+
+// sets connection capabilities atomically
+//
+// only provided values are changed, other values are left unchanged.
+// If any of the changes fails, all changes are discarded.
+//
+// :precond: active sessions == 0
+// :returns: :protobuf:msg:`Mysqlx::Ok` or :protobuf:msg:`Mysqlx::Error`
+message CapabilitiesSet {
+  required Capabilities capabilities = 1;
+};
+
+// announce to the server that the client wants to close the connection
+//
+// it discards any session state of the server
+//
+// :Returns: :protobuf:msg:`Mysqlx::Ok`
+message Close {
+};
+
